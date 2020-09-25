@@ -5,8 +5,17 @@ package me.alexisevelyn;
 // reST format: https://docutils.readthedocs.io/en/sphinx-docs/user/rst/quickstart.html
 // Test Editor: https://livesphinx.herokuapp.com/
 
+import java.io.File;
+
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("Test Load!!!");
+		File file;
+
+		if (args.length == 0)
+			file = new File("ExampleRSTFile.rst");
+		else
+			file = new File(args[0]);
+
+		System.out.println("Using File: " + file.getAbsolutePath());
 	}
 }

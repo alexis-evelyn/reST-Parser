@@ -10,5 +10,18 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // JUnit API
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${project.junit_version}"
+
+    // JUnit Engine
+    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${project.junit_version}"
+
+    // For Annotations
+    compile group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations_version}"
+}
+
+test {
+    useJUnitPlatform() // For JUnit 5 - JUnit 4 was just useJUnit()
+
+    maxHeapSize = '1G'
 }
