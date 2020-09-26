@@ -9,10 +9,20 @@ public class TagsTests {
 	@Test
 	public void testTags() {
 		File testFile = new File("testfiles/test.rst");
+		File rootReadMe = new File("ReadMe.rst");
+
 		System.out.println("Using File For Test: " + testFile.getAbsolutePath());
 
 		try {
-			Parser parser = new Parser(testFile);
+			System.out.println("------------------------------------------");
+			System.out.println("                 Test File                ");
+			System.out.println("------------------------------------------");
+			new Parser(testFile);
+
+			System.out.println("------------------------------------------");
+			System.out.println("                ReadMe File               ");
+			System.out.println("------------------------------------------");
+			new Parser(rootReadMe);
 		} catch (Exception e) {
 			System.out.println("File Read: " + e.getMessage());
 			e.printStackTrace();
