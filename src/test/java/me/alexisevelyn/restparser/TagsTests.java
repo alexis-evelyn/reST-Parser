@@ -11,17 +11,18 @@ public class TagsTests {
 		File testFile = new File("testfiles/test.rst");
 		File rootReadMe = new File("ReadMe.rst");
 
-		System.out.println("Using File For Test: " + testFile.getAbsolutePath());
+		System.out.println(TerminalColors.ANSI_TEXT_PURPLE + "Using File For Test: " + testFile.getAbsolutePath());
+		System.out.println(TerminalColors.ANSI_TEXT_PURPLE + "Using File For Test: " + rootReadMe.getAbsolutePath());
 
 		try {
-			System.out.println("------------------------------------------");
-			System.out.println("                 Test File                ");
-			System.out.println("------------------------------------------");
+			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "------------------------------------------");
+			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "                 Test File                ");
+			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "------------------------------------------");
 			new Parser(testFile);
 
-			System.out.println("------------------------------------------");
-			System.out.println("                ReadMe File               ");
-			System.out.println("------------------------------------------");
+			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "------------------------------------------");
+			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "                ReadMe File               ");
+			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "------------------------------------------");
 			new Parser(rootReadMe);
 		} catch (Exception e) {
 			System.out.println("File Read: " + e.getMessage());
