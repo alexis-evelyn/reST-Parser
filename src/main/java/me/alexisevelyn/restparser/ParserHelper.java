@@ -1,7 +1,8 @@
 package me.alexisevelyn.restparser;
 
 public class ParserHelper {
-	private static final String DEFAULT_HEADING_REGEX = "[\\W]+";
+	// This Regex Was Harder to Figure Out Than I Would've Thought. I'm making it available for public domain explicitly to save others the trouble.
+	private static final String DEFAULT_HEADING_REGEX = "^(?=\\W)(\\S)+$"; // https://regexr.com/5cr56 - ^(?=\W)(\S)+$
 
 	public static boolean isHeading(String tag) {
 		return isHeading(tag, DEFAULT_HEADING_REGEX);
@@ -18,7 +19,7 @@ public class ParserHelper {
 	public static boolean isTwoLineHeading(String tag, String markerRegex) {
 		int count = countLines(tag);
 
-		if (count != 2)
+		if (count < 2)
 			return false;
 
 		try {
@@ -28,6 +29,7 @@ public class ParserHelper {
 			if (delimiterLine.length() < headingLine.length())
 				return false;
 
+			System.err.println("2 Tag: " + tag);
 			return delimiterLine.matches(markerRegex);
 		} catch (Exception e) {
 			System.err.println("Warning - Tag \"" + tag + "\" breaks the two liner heading check!!!");
@@ -44,7 +46,7 @@ public class ParserHelper {
 	public static boolean isThreeLineHeading(String tag, String markerRegex) {
 		int count = countLines(tag);
 
-		if (count != 3)
+		if (count < 3)
 			return false;
 
 		try {
@@ -83,10 +85,10 @@ public class ParserHelper {
 	}
 
 	private static String getLine(String str, int lineNumber) {
-		return getLine(str, "\n", lineNumber);
+		return getSubstring(str, "\n", lineNumber);
 	}
 
-	private static String getLine(String str, String delimeter, int lineNumber) {
+	private static String getSubstring(String str, String delimeter, int lineNumber) {
 		return str.split(delimeter)[lineNumber];
 	}
 }

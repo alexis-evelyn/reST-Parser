@@ -19,4 +19,5 @@ To run the test(s), run :bash:`./gradlew test` or :bash:`gradlew test`.
     * Test Editor: https://livesphinx.herokuapp.com/
     * Syntax Reference: https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html
     * Text Roles: https://stackoverflow.com/a/12365251/6828099
+    * Pygments Languages: https://pygments.org/languages/
     * Notes: https://sublime-and-sphinx-guide.readthedocs.io/en/latest/notes_warnings.html
