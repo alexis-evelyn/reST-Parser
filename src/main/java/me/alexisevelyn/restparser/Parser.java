@@ -33,14 +33,19 @@ public class Parser {
 
 	// Replace with Implementation In Tests
 	private static void countTags(List<String> tags) {
-		int Heading = 0;
+		int headingTwoLine = 0;
+		int headingThreeLine = 0;
 
 		for (String tag : tags) {
-			if (ParserHelper.isHeading(tag)) {
-				Heading++;
-			}
+			// Sadly Switch Statements Do Not Work With This.
+			if (ParserHelper.isTwoLineHeading(tag))
+				headingTwoLine++;
+			if (ParserHelper.isThreeLineHeading(tag))
+				headingThreeLine++;
 		}
 
-		System.out.println("Heading: " + Heading);
+		System.out.println("Underline Heading: " + headingTwoLine);
+		System.out.println("Overline and Underline Heading: " + headingThreeLine);
+		System.out.println("All Headings: " + (headingTwoLine + headingThreeLine));
 	}
 }

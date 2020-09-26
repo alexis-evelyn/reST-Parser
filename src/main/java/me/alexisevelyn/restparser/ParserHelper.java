@@ -1,23 +1,26 @@
 package me.alexisevelyn.restparser;
 
 public class ParserHelper {
+	private static final String DEFAULT_HEADING_REGEX = "[\\W]+";
+
 	public static boolean isHeading(String tag) {
-		// TODO: Find all valid overline and underline characters for headings
-		return isHeading(tag, "[#~!]+");
+		return isHeading(tag, DEFAULT_HEADING_REGEX);
 	}
 
 	public static boolean isHeading(String tag, String markerRegex) {
-		int count = countLines(tag);
+		return isTwoLineHeading(tag, markerRegex) || isThreeLineHeading(tag, markerRegex);
+	}
 
-		if (count == 2)
-			return isTwoLineHeading(tag, markerRegex);
-		if (count == 3)
-			return isThreeLineHeading(tag, markerRegex);
-
-		return false;
+	public static boolean isTwoLineHeading(String tag) {
+		return isTwoLineHeading(tag, DEFAULT_HEADING_REGEX);
 	}
 
 	public static boolean isTwoLineHeading(String tag, String markerRegex) {
+		int count = countLines(tag);
+
+		if (count != 2)
+			return false;
+
 		try {
 			String headingLine = getLine(tag, 0);
 			String delimiterLine = getLine(tag, 1);
@@ -34,7 +37,16 @@ public class ParserHelper {
 		}
 	}
 
+	public static boolean isThreeLineHeading(String tag) {
+		return isThreeLineHeading(tag, DEFAULT_HEADING_REGEX);
+	}
+
 	public static boolean isThreeLineHeading(String tag, String markerRegex) {
+		int count = countLines(tag);
+
+		if (count != 3)
+			return false;
+
 		try {
 			String overLine = getLine(tag, 0);
 			String headingLine = getLine(tag, 1);
