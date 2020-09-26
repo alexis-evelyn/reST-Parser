@@ -44,8 +44,8 @@ public class Parser {
 				headingThreeLine++;
 		}
 
-		System.out.println("Underline Heading: " + headingTwoLine);
-		System.out.println("Overline and Underline Heading: " + headingThreeLine);
-		System.out.println("All Headings: " + (headingTwoLine + headingThreeLine));
+		System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Underline Heading: " + headingTwoLine);
+		System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Overline and Underline Heading: " + headingThreeLine);
+		System.out.println(TerminalColors.ANSI_TEXT_RED + "All Headings: " + (headingTwoLine + headingThreeLine));
 	}
 }
