@@ -29,7 +29,7 @@ public class ParserHelper {
 			if (delimiterLine.length() < headingLine.length())
 				return false;
 
-			System.err.println("2 Tag: " + tag);
+//			System.err.println("2 Tag: " + tag);
 			return delimiterLine.matches(markerRegex);
 		} catch (Exception e) {
 			System.err.println("Warning - Tag \"" + tag + "\" breaks the two liner heading check!!!");
