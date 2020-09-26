@@ -1,8 +1,13 @@
+.. role:: bash(code)
+   :language: bash
+
 =======
 Read Me
 =======
 
 A ReadMe will be written later.
+
+To run the test(s), run :bash:`./gradlew test` or :bash:`gradlew test`.
 
 .. code-block:: java
 
