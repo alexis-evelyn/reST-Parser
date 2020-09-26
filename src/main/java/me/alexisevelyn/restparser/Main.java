@@ -4,6 +4,7 @@ package me.alexisevelyn.restparser;
 // Pull Example Document From: https://github.com/edx/edx-documentation/blob/master/en_us/edx_style_guide/source/ExampleRSTFile.rst
 // reST format: https://docutils.readthedocs.io/en/sphinx-docs/user/rst/quickstart.html
 // Test Editor: https://livesphinx.herokuapp.com/
+// Syntax Reference: https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html
 
 public class Main {
 	public static void main(String[] args) {
