@@ -1,5 +1,11 @@
 package me.alexisevelyn.restparser;
 
+// Turns out this is called a Lexer which is a type of Tokenizer
+// Links
+// SO: https://stackoverflow.com/questions/764247/why-are-regular-expressions-so-controversial#comment6442961_764266
+// Parsing: http://lisperator.net/pltut/parser/
+// Lexer Definition/Explanation: https://stackoverflow.com/a/380487/6828099
+
 public class ParserHelper {
 	// This Regex Was Harder to Figure Out Than I Would've Thought. I'm making it available for public domain explicitly to save others the trouble.
 	private static final String DEFAULT_HEADING_REGEX = "^(?=\\W)(\\S)+$"; // https://regexr.com/5cr56 - ^(?=\W)(\S)+$
