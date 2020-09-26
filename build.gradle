@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'me.alexisevelyn.reSTParser'
+group 'me.alexisevelyn.restparser'
 version '0.0.1-SNAPSHOT'
 
 repositories {
@@ -18,6 +18,9 @@ dependencies {
 
     // For Annotations
     compile group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations_version}"
+
+    // For Reading Utilities
+    implementation group: 'org.apache.commons', name: 'commons-text', version: "${project.apache_commons_text_version}"
 }
 
 test {
