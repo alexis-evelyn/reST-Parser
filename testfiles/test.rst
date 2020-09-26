@@ -1,9 +1,9 @@
 #################
-Example .rst File
+Test RST Header
 #################
 
 Test
 ~~~~
 
 2
-~
+!

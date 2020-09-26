@@ -2,7 +2,8 @@ package me.alexisevelyn.restparser;
 
 public class ParserHelper {
 	public static boolean isHeading(String tag) {
-		return isHeading(tag, "[#~]+");
+		// TODO: Find all valid overline and underline characters for headings
+		return isHeading(tag, "[#~!]+");
 	}
 
 	public static boolean isHeading(String tag, String markerRegex) {
@@ -18,15 +19,15 @@ public class ParserHelper {
 
 	public static boolean isTwoLineHeading(String tag, String markerRegex) {
 		try {
-			String HeadingLine = getLine(tag, 0);
+			String headingLine = getLine(tag, 0);
 			String delimiterLine = getLine(tag, 1);
 
-			if (delimiterLine.length() < HeadingLine.length())
+			if (delimiterLine.length() < headingLine.length())
 				return false;
 
 			return delimiterLine.matches(markerRegex);
 		} catch (Exception e) {
-			System.err.println("Warning - Tag \"" + tag + "\" breaks the two liner Heading check!!!");
+			System.err.println("Warning - Tag \"" + tag + "\" breaks the two liner heading check!!!");
 			System.err.println("Exception Is: " + e.getMessage());
 
 			return false;
@@ -34,18 +35,25 @@ public class ParserHelper {
 	}
 
 	public static boolean isThreeLineHeading(String tag, String markerRegex) {
-		String overLine = getLine(tag, 0);
-		String HeadingLine = getLine(tag, 1);
-		String underLine = getLine(tag, 2);
+		try {
+			String overLine = getLine(tag, 0);
+			String headingLine = getLine(tag, 1);
+			String underLine = getLine(tag, 2);
 
-		if (overLine.length() != underLine.length() || HeadingLine.length() < overLine.length())
+			if (overLine.length() != underLine.length() || overLine.length() < headingLine.length())
+				return false;
+
+			return overLine.matches(markerRegex) && underLine.matches(markerRegex);
+		} catch (Exception e) {
+			System.err.println("Warning - Tag \"" + tag + "\" breaks the three liner heading check!!!");
+			System.err.println("Exception Is: " + e.getMessage());
+
 			return false;
-
-		return overLine.matches(markerRegex) && underLine.matches(markerRegex);
+		}
 	}
 
 	private static int countLines(String str) {
-		return countDelimiter(str, "\n");
+		return countDelimiter(str.trim(), "\n");
 	}
 
 	// Modified From: https://stackoverflow.com/a/18816371/6828099

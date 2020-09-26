@@ -167,7 +167,3 @@ gradle-app.setting
 
 # Manual
 gradle/
-
-# Test Files
-ExampleRSTFile.rst
-test.rst

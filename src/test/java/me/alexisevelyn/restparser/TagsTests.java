@@ -4,14 +4,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TagsTests {
 	@Test
 	public void testTags() {
-		File testFile = new File("ExampleRSTFile.rst");
+		File testFile = new File("testfiles/test.rst");
 		System.out.println("Using File For Test: " + testFile.getAbsolutePath());
 
 		try {
