@@ -4,6 +4,7 @@ import me.alexisevelyn.restparser.LexerHelper;
 import me.alexisevelyn.restparser.document.Token;
 
 public class BulletedList implements Token {
+	private static final String DEFAULT_BULLET_REGEX = "^[*\\-+] .+";
 	private String token;
 
 	@Override
@@ -17,7 +18,7 @@ public class BulletedList implements Token {
 		for (int lineNumber = 0; lineNumber < LexerHelper.countLines(token); lineNumber++) {
 			line = LexerHelper.getLine(token, lineNumber);
 
-			if (!line.startsWith("* ")) {
+			if (!line.matches(DEFAULT_BULLET_REGEX)) {
 				return false;
 			}
 		}
