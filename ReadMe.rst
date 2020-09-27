@@ -21,3 +21,6 @@ To run the test(s), run :bash:`./gradlew test` or :bash:`gradlew test`.
     * Text Roles: https://stackoverflow.com/a/12365251/6828099
     * Pygments Languages: https://pygments.org/languages/
     * Notes: https://sublime-and-sphinx-guide.readthedocs.io/en/latest/notes_warnings.html
+    * RegEx: https://stackoverflow.com/questions/764247/why-are-regular-expressions-so-controversial#comment6442961_764266
+    * Parsing: http://lisperator.net/pltut/parser/
+    * Lexer Definition/Explanation: https://stackoverflow.com/a/380487/6828099

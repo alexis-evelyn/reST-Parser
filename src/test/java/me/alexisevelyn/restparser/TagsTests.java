@@ -18,30 +18,17 @@ public class TagsTests {
 			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "------------------------------------------");
 			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "                 Test File                ");
 			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "------------------------------------------");
-			new Parser(testFile);
+			new Reader(testFile);
 
 			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "------------------------------------------");
 			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "                ReadMe File               ");
 			System.out.println(TerminalColors.ANSI_TEXT_BLUE + "------------------------------------------");
-			new Parser(rootReadMe);
+			new Reader(rootReadMe);
 		} catch (Exception e) {
-			System.out.println("File Read: " + e.getMessage());
+			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 
 		Assertions.assertEquals(1, 1);
 	}
-
-//	private static void countTags(List<String> tags) {
-	// TODO: Replace with checking tags from Document object.
-//		int Heading = 0;
-//
-//		for (String tag : tags) {
-//			if (ParserHelper.isHeading(tag)) {
-//				Heading++;
-//			}
-//		}
-//
-//		System.out.println("Heading: " + Heading);
-//	}
 }
