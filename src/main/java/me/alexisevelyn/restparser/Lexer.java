@@ -1,8 +1,9 @@
 package me.alexisevelyn.restparser;
 
 import me.alexisevelyn.restparser.document.Document;
-import me.alexisevelyn.restparser.document.Heading;
+import me.alexisevelyn.restparser.document.tokens.Heading;
 import me.alexisevelyn.restparser.document.Token;
+import me.alexisevelyn.restparser.document.tokens.Unidentified;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -22,7 +23,10 @@ public class Lexer {
 	public Document initializeDocument(List<String> tokens) {
 		Document document = new Document();
 
+		boolean foundHandler;
 		for (String token : tokens) {
+			foundHandler = false;
+
 			for (Class<? extends Token> handler : handlers) {
 				try {
 					// Instantiate Handler Object - Sadly I cannot enforce static methods with an interface. :(
@@ -33,11 +37,19 @@ public class Lexer {
 						newHandler.initialize(token);
 
 						document.add(newHandler);
+						foundHandler = true;
 					}
 				} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
 					System.err.println("Failed To Execute Handler: '" + handler.getName() + "'!!!");
 					e.printStackTrace();
 				}
+			}
+
+			// If handler not found, add to unidentified handlers!
+			if (!foundHandler) {
+				Unidentified unidentified = new Unidentified();
+				unidentified.initialize(token);
+				document.add(unidentified);
 			}
 		}
 

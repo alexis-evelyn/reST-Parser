@@ -1,6 +1,7 @@
-package me.alexisevelyn.restparser.document;
+package me.alexisevelyn.restparser.document.tokens;
 
 import me.alexisevelyn.restparser.LexerHelper;
+import me.alexisevelyn.restparser.document.Token;
 
 public class Heading implements Token {
 	// This Regex Was Harder to Figure Out Than I Would've Thought. I'm making it available for public domain explicitly to save others the trouble.
@@ -81,12 +82,17 @@ public class Heading implements Token {
 	}
 
 	@Override
-	public String toString() {
-		return token;
+	public String getRawToken() {
+		return this.token;
 	}
 
 	@Override
 	public String getName() {
 		return "Heading";
+	}
+
+	@Override
+	public String toString() {
+		return this.getRawToken();
 	}
 }
