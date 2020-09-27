@@ -1,9 +1,7 @@
 package me.alexisevelyn.restparser;
 
 import me.alexisevelyn.restparser.document.Document;
-import me.alexisevelyn.restparser.document.tokens.BulletedList;
-import me.alexisevelyn.restparser.document.tokens.Heading;
-import me.alexisevelyn.restparser.document.Token;
+import me.alexisevelyn.restparser.document.tokens.*;
 import me.alexisevelyn.restparser.document.tokens.Unidentified;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,6 +14,8 @@ public class Lexer {
 	public Lexer() {
 		this.addHandler(Heading.class);
 		this.addHandler(BulletedList.class);
+		this.addHandler(Directive.class);
+		this.addHandler(EnumeratedList.class);
 	}
 
 	public void addHandler(Class<? extends Token> handler) {

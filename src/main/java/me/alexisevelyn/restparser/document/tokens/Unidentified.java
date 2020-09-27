@@ -1,7 +1,5 @@
 package me.alexisevelyn.restparser.document.tokens;
 
-import me.alexisevelyn.restparser.document.Token;
-
 public class Unidentified implements Token {
 	private String token;
 

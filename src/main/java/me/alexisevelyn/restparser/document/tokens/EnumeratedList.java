@@ -2,8 +2,10 @@ package me.alexisevelyn.restparser.document.tokens;
 
 import me.alexisevelyn.restparser.LexerHelper;
 
-public class BulletedList implements Token {
-	private static final String DEFAULT_BULLET_REGEX = "^[*\\-+] .+";
+public class EnumeratedList implements Token {
+	private static final String DEFAULT_DOUBLE_BRACKET_LIST = "^\\([a-zA-Z0-9]\\) .+";
+	private static final String DEFAULT_SINGLE_LIST = "^[a-zA-Z0-9][.)] .+";
+
 	private String token;
 
 	@Override
@@ -17,7 +19,7 @@ public class BulletedList implements Token {
 		for (int lineNumber = 0; lineNumber < LexerHelper.countLines(token); lineNumber++) {
 			line = LexerHelper.getLine(token, lineNumber);
 
-			if (!line.matches(DEFAULT_BULLET_REGEX)) {
+			if (!line.matches(DEFAULT_DOUBLE_BRACKET_LIST) && !line.matches(DEFAULT_SINGLE_LIST)) {
 				return false;
 			}
 		}
@@ -32,7 +34,7 @@ public class BulletedList implements Token {
 
 	@Override
 	public String getName() {
-		return "Bulleted List";
+		return "Enumerated List";
 	}
 
 	@Override

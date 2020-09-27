@@ -1,4 +1,4 @@
-package me.alexisevelyn.restparser.document;
+package me.alexisevelyn.restparser.document.tokens;
 
 public interface Token {
 	void initialize(String token);

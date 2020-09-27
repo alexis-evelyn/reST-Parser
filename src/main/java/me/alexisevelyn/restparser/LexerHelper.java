@@ -1,8 +1,7 @@
 package me.alexisevelyn.restparser;
 
 import me.alexisevelyn.restparser.document.Document;
-import me.alexisevelyn.restparser.document.Token;
-import me.alexisevelyn.restparser.document.tokens.Unidentified;
+import me.alexisevelyn.restparser.document.tokens.Token;
 
 import java.util.ArrayList;
 import java.util.function.Function;
