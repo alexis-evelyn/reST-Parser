@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-public class TagsTests {
+public class TokensTests {
 	@Test
-	public void testTags() {
+	public void testTokens() {
 		File testFile = new File("testfiles/test.rst");
 		File rootReadMe = new File("ReadMe.rst");
 

@@ -1,23 +1,46 @@
 package me.alexisevelyn.restparser;
 
+import me.alexisevelyn.restparser.document.Document;
+import me.alexisevelyn.restparser.document.Heading;
+import me.alexisevelyn.restparser.document.Token;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Lexer {
-	// TODO: Replace with checking tags from Document object.
-	public static void countTags(List<String> tags) {
-		int headingTwoLine = 0;
-		int headingThreeLine = 0;
+	private final ArrayList<Class<? extends Token>> handlers = new ArrayList<>();
 
-		for (String tag : tags) {
-			// Sadly Switch Statements Do Not Work With This.
-			if (LexerHelper.isTwoLineHeading(tag))
-				headingTwoLine++;
-			if (LexerHelper.isThreeLineHeading(tag))
-				headingThreeLine++;
+	public Lexer() {
+		this.addHandler(Heading.class);
+	}
+
+	public void addHandler(Class<? extends Token> handler) {
+		this.handlers.add(handler);
+	}
+
+	public Document initializeDocument(List<String> tokens) {
+		Document document = new Document();
+
+		for (String token : tokens) {
+			for (Class<? extends Token> handler : handlers) {
+				try {
+					// Instantiate Handler Object - Sadly I cannot enforce static methods with an interface. :(
+					Token newHandler = handler.getDeclaredConstructor().newInstance();
+
+					// If Handler Handles Token, Add to Document
+					if (newHandler.isHandled(token)) {
+						newHandler.initialize(token);
+
+						document.add(newHandler);
+					}
+				} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+					System.err.println("Failed To Execute Handler: '" + handler.getName() + "'!!!");
+					e.printStackTrace();
+				}
+			}
 		}
 
-		System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Underline Heading: " + headingTwoLine);
-		System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Overline and Underline Heading: " + headingThreeLine);
-		System.out.println(TerminalColors.ANSI_TEXT_RED + "All Headings: " + (headingTwoLine + headingThreeLine));
+		return document;
 	}
 }

@@ -1,5 +1,6 @@
 package me.alexisevelyn.restparser;
 
+import me.alexisevelyn.restparser.document.Document;
 import me.alexisevelyn.restparser.exceptions.FileReadException;
 import me.alexisevelyn.restparser.exceptions.InvalidFileException;
 import org.apache.commons.text.TextStringBuilder;
@@ -13,8 +14,12 @@ import java.util.List;
 public class Reader {
 	Reader(@NotNull File file) throws IOException, InvalidFileException, FileReadException {
 		TextStringBuilder fileContents = readFile(file);
+		List<String> tokens = tokenizeContents(fileContents.toString());
 
-		Lexer.countTags(tokenizeContents(fileContents.toString()));
+		Lexer lexer = new Lexer();
+		Document document = lexer.initializeDocument(tokens);
+
+		LexerHelper.countTokens(document);
 	}
 
 	private static List<String> tokenizeContents(@NotNull String fileContents) {
