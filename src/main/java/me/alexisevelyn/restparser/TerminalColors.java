@@ -1,7 +1,5 @@
 package me.alexisevelyn.restparser;
 
-// TODO: Move to Tests Module
-
 // https://en.wikipedia.org/wiki/ANSI_escape_code
 public enum TerminalColors {
 	// Special

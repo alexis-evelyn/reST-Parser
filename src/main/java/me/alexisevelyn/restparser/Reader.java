@@ -41,6 +41,7 @@ public class Reader {
 		return this.document;
 	}
 
+	// TODO: Create better tokenizer to handle edge cases
 	private static List<String> tokenizeContents(@NotNull String fileContents) {
 		return Arrays.asList(fileContents.split("\n\n"));
 	}
