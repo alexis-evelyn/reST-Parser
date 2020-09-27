@@ -4,6 +4,13 @@ import me.alexisevelyn.restparser.document.Document;
 import me.alexisevelyn.restparser.document.Heading;
 import me.alexisevelyn.restparser.document.Token;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class LexerHelper {
 	private static final String DEFAULT_LINE_DELIMITER = "\n";
 
@@ -33,19 +40,20 @@ public class LexerHelper {
 		return str.split(delimeter)[lineNumber];
 	}
 
-	// TODO: Generalize The Check
-	public static void countTokens(Document document) {
-		int heading = 0;
+	public static void printTokenCounts(Document document) {
+		ArrayList<String> tokenNames = new ArrayList<>();
 
+		// Is there a more efficient way than creating the above temporary variable?
 		for (Token token : document) {
-			System.out.println("(Debug) Token Type: " + token.getName());
-			System.out.println("(Debug) Token: " + token);
+//			System.out.println("(Debug) Token Type: " + token.getName());
+//			System.out.println("(Debug) Token: " + token);
 
-			if (token instanceof Heading) {
-				heading++;
-			}
+			tokenNames.add(token.getName());
 		}
 
-		System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Headings: " + heading);
+		Stream.of(tokenNames.toArray())
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+				.forEach((key, value)
+						-> System.out.println(String.valueOf(TerminalColors.ANSI_TEXT_GREEN) + key + ": " + value));
 	}
 }

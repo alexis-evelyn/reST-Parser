@@ -12,14 +12,33 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Reader {
+	private Document document;
+
 	Reader(@NotNull File file) throws IOException, InvalidFileException, FileReadException {
 		TextStringBuilder fileContents = readFile(file);
-		List<String> tokens = tokenizeContents(fileContents.toString());
 
-		Lexer lexer = new Lexer();
-		Document document = lexer.initializeDocument(tokens);
+		this.initializeReader(tokenizeContents(fileContents.toString()));
+	}
 
-		LexerHelper.countTokens(document);
+	private void initializeReader(List<String> tokens) {
+		// Initialize Lexer
+		Lexer lexer = this.createLexer();
+
+		// Parse Document For Tokens
+		this.document = lexer.initializeDocument(tokens);
+	}
+
+	/**
+	 * Override this method to customize Lexer
+	 *
+	 * @return Instance of {@link Lexer}
+	 */
+	public Lexer createLexer() {
+		return new Lexer();
+	}
+
+	public Document getDocument() {
+		return this.document;
 	}
 
 	private static List<String> tokenizeContents(@NotNull String fileContents) {
