@@ -1,10 +1,11 @@
 package me.alexisevelyn.restparser.detectors;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.spi.FileTypeDetector;
 import java.util.Optional;
+
+// https://stackoverflow.com/a/32863198/6828099
 
 public class RestDetector extends FileTypeDetector {
 	/**
@@ -25,7 +26,6 @@ public class RestDetector extends FileTypeDetector {
 	 * @param path the path to the file to probe
 	 * @return The content type or {@code null} if the file type is not
 	 * recognized
-	 * @throws IOException       An I/O error occurs
 	 * @throws SecurityException If the implementation requires to access the file, and a
 	 *                           security manager is installed, and it denies an unspecified
 	 *                           permission required by a file system provider implementation.
@@ -35,7 +35,7 @@ public class RestDetector extends FileTypeDetector {
 	 * @see Files#probeContentType
 	 */
 	@Override
-	public String probeContentType(Path path) throws IOException {
+	public String probeContentType(Path path) {
 		Optional<String> extension = getExtension(path.getFileName().toString());
 
 		if (extension.isPresent() && extension.get().equals("rst"))
