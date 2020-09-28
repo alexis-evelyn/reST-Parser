@@ -22,7 +22,9 @@ public class Lexer {
 		this.handlers.add(handler);
 	}
 
-	public Document initializeDocument(List<String> tokens) {
+	public Document initializeDocument(String fileContents) {
+		List<String> tokens = TokenizerHelper.tokenizeContents(fileContents);
+
 		Document document = new Document();
 
 		boolean foundHandler;

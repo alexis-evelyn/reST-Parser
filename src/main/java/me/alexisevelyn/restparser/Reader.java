@@ -8,24 +8,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
 
 public class Reader {
 	private Document document;
 
 	Reader(@NotNull File file) throws IOException, InvalidFileException, FileReadException {
-		TextStringBuilder fileContents = readFile(file);
-
-		this.initializeReader(tokenizeContents(fileContents.toString()));
+		this.initializeReader(readFile(file).toString());
 	}
 
-	private void initializeReader(List<String> tokens) {
+	private void initializeReader(String fileContents) {
 		// Initialize Lexer
 		Lexer lexer = this.createLexer();
 
 		// Parse Document For Tokens
-		this.document = lexer.initializeDocument(tokens);
+		this.document = lexer.initializeDocument(fileContents);
 	}
 
 	/**
@@ -39,11 +35,6 @@ public class Reader {
 
 	public Document getDocument() {
 		return this.document;
-	}
-
-	// TODO: Create better tokenizer to handle edge cases
-	private static List<String> tokenizeContents(@NotNull String fileContents) {
-		return Arrays.asList(fileContents.split("\n\n"));
 	}
 
 	private static TextStringBuilder readFile(@NotNull File file) throws IOException, InvalidFileException, FileReadException {
