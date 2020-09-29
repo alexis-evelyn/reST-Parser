@@ -22,6 +22,10 @@ public class Lexer {
 		this.handlers.add(handler);
 	}
 
+	public void removeHandler(Class<? extends Token> handler) {
+		this.handlers.remove(handler);
+	}
+
 	public Document initializeDocument(String fileContents) {
 		List<String> tokens = TokenizerHelper.tokenizeContents(fileContents);
 
@@ -44,8 +48,10 @@ public class Lexer {
 						foundHandler = true;
 					}
 				} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
-					System.err.println("Failed To Execute Handler: '" + handler.getName() + "'!!!");
+					System.err.println("Failed To Execute Handler: '" + handler.getName() + "'!!! Removing Handler!!!");
 					e.printStackTrace();
+
+					this.removeHandler(handler);
 				}
 			}
 

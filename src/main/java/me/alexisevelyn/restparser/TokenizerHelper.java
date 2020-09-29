@@ -1,5 +1,6 @@
 package me.alexisevelyn.restparser;
 
+import me.alexisevelyn.restparser.document.tokens.Directive;
 import me.alexisevelyn.restparser.document.tokens.Heading;
 import org.jetbrains.annotations.NotNull;
 
@@ -74,8 +75,15 @@ public class TokenizerHelper {
 	@NotNull
 	private static ArrayList<String> joinDirectiveTokens(@NotNull List<String> tokens) {
 		// TODO: Detect Directive Marker and Check For Indented Lines in Future Tokens Before Return
+		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
 
+		for (String token : tokens) {
+			if (!Directive.isDirective(token))
+				continue;
 
-		return new ArrayList<>(tokens);
+			System.out.println("Found Directive!!! " + token);
+		}
+
+		return modifiedTokens;
 	}
 }
