@@ -74,7 +74,6 @@ public class TokenizerHelper {
 
 	@NotNull
 	private static ArrayList<String> joinDirectiveTokens(@NotNull List<String> tokens) {
-		// TODO: Detect Directive Marker and Check For Indented Lines in Future Tokens Before Return
 		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
 		ArrayList<Map<int[], String>> preProcessedTokens = new ArrayList<>();
 
@@ -123,14 +122,13 @@ public class TokenizerHelper {
 
 	private static Map<int[], String> mergeDirectiveTokens(int startingPos, ArrayList<String> tokens) {
 		String DIRECTIVE_ENDING_REGEX = "(^[\\S]+).*";
-//		String DIRECTIVE_ENDING_REGEX_ALT = "^[\\S]+";
 
 		StringBuilder currentDirective = new StringBuilder().append(tokens.get(startingPos-1)).append(LexerHelper.getDefaultLineDelimiter()).append(LexerHelper.getDefaultLineDelimiter());
 		int endingPos = tokens.size();
 		for (int currentTokenPos = startingPos; currentTokenPos < tokens.size(); currentTokenPos++) {
 //			printColor(TerminalColors.ANSI_TEXT_RED, tokens.get(currentTokenPos));
 
-			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX)) {// || LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX_ALT)) {
+			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX)) {
 				endingPos = currentTokenPos;
 				break;
 			}
