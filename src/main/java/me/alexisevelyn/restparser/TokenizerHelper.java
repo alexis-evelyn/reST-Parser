@@ -105,17 +105,24 @@ public class TokenizerHelper {
 //			printColor(TerminalColors.ANSI_TEXT_CYAN, modifiedTokens.get(startPos));
 //			printColor(TerminalColors.ANSI_TEXT_WHITE, modifiedTokens.get(endingPos));
 
+			// Replace First Token With Correct Directive Token
 			modifiedTokens.set(startPos, directiveToken);
 
-			// TODO: Remove these tokens and adjust currentPos based on previously removed tokens
+			// Remove Old Incorrectly Split Tokens
 			for (int currentPos = startPos + 1; currentPos <= endingPos; currentPos++) {
-				printColor(TerminalColors.ANSI_TEXT_YELLOW, modifiedTokens.get(currentPos));
+//				printColor(TerminalColors.ANSI_TEXT_YELLOW, modifiedTokens.get(currentPos));
+
+				// We set the tokens to null as it's a hell of a lot easier to keep the indexes the same and just remove null values later.
+				modifiedTokens.set(currentPos, "");
 			}
 		}
 
-		printColor(TerminalColors.ANSI_TEXT_YELLOW, "------------------------------------------------------------------------------------------");
-		printColor(TerminalColors.ANSI_TEXT_RED, TerminalColors.ANSI_TEXT_GREEN, modifiedTokens);
-		printColor(TerminalColors.ANSI_TEXT_PURPLE, "------------------------------------------------------------------------------------------");
+		// Now knowing I could do this in some kind of "Big Brain" idea, I could probably rewrite this file later to be more efficient!!!
+		modifiedTokens.removeIf(token -> token.equals(""));
+
+//		printColor(TerminalColors.ANSI_TEXT_YELLOW, "------------------------------------------------------------------------------------------");
+//		printColor(TerminalColors.ANSI_TEXT_RED, TerminalColors.ANSI_TEXT_GREEN, modifiedTokens);
+//		printColor(TerminalColors.ANSI_TEXT_PURPLE, "------------------------------------------------------------------------------------------");
 
 		return modifiedTokens;
 	}
