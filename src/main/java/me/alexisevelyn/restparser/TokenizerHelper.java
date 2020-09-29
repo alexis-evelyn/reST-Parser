@@ -106,7 +106,7 @@ public class TokenizerHelper {
 			currentDirective.append(LexerHelper.getDefaultLineDelimiter()).append(LexerHelper.getDefaultLineDelimiter());
 		}
 
-		return currentDirective.toString();
+		return currentDirective.toString().trim();
 	}
 
 	private static void printColor(TerminalColors color, String token) {
