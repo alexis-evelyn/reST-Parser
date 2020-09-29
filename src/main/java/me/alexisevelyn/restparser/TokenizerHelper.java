@@ -2,7 +2,6 @@ package me.alexisevelyn.restparser;
 
 import me.alexisevelyn.restparser.document.tokens.Directive;
 import me.alexisevelyn.restparser.document.tokens.Heading;
-import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -112,7 +111,10 @@ public class TokenizerHelper {
 			// TODO: Remove Tokens in Range After Starting Position
 		}
 
-		printColor(TerminalColors.ANSI_TEXT_RED, Arrays.toString(modifiedTokens.toArray()));
+		printColor(TerminalColors.ANSI_TEXT_YELLOW, "------------------------------------------------------------------------------------------");
+		printColor(TerminalColors.ANSI_TEXT_RED, TerminalColors.ANSI_TEXT_GREEN, modifiedTokens);
+		printColor(TerminalColors.ANSI_TEXT_PURPLE, "------------------------------------------------------------------------------------------");
+
 		return modifiedTokens;
 	}
 
@@ -146,6 +148,22 @@ public class TokenizerHelper {
 	private static void printColor(TerminalColors color, String token) {
 		for (int lineNumber = 0; lineNumber < LexerHelper.countLines(token); lineNumber++) {
 			System.out.println(color + LexerHelper.getLine(token, lineNumber));
+		}
+	}
+
+	private static void printColor(TerminalColors color, List<String> tokens) {
+		printColor(color, color, tokens);
+	}
+
+	private static void printColor(TerminalColors color, TerminalColors color2, List<String> tokens) {
+		boolean firstColor = true;
+		for (String token : tokens) {
+			if (firstColor)
+				printColor(color, token);
+			else
+				printColor(color2, token);
+
+			firstColor = !firstColor;
 		}
 	}
 }
