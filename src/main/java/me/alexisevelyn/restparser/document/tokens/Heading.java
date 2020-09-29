@@ -18,12 +18,16 @@ public class Heading implements Token {
 		return isHeading(token);
 	}
 
-	private static boolean isHeading(String token) {
+	public static boolean isHeading(String token) {
 		return isHeading(token, DEFAULT_HEADING_REGEX);
 	}
 
 	public static boolean isHeading(String token, String markerRegex) {
 		return isTwoLineHeading(token, markerRegex) || isThreeLineHeading(token, markerRegex);
+	}
+
+	public static boolean isTwoLineHeading(String token) {
+		return isTwoLineHeading(token, DEFAULT_HEADING_REGEX);
 	}
 
 	public boolean isTwoLineHeading() {
@@ -51,6 +55,10 @@ public class Heading implements Token {
 
 			return false;
 		}
+	}
+
+	public static boolean isThreeLineHeading(String token) {
+		return isThreeLineHeading(token, DEFAULT_HEADING_REGEX);
 	}
 
 	public boolean isThreeLineHeading() {

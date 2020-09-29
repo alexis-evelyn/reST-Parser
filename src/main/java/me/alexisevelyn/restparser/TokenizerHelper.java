@@ -1,5 +1,6 @@
 package me.alexisevelyn.restparser;
 
+import me.alexisevelyn.restparser.document.tokens.Heading;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -25,9 +26,18 @@ public class TokenizerHelper {
 
 	private static void splitEdgeCaseHeadings(@NotNull List<String> tokens) {
 		// TODO: Check For Mashed Headers Specifically Here Too Before Return
+
+
 	}
 
 	private static void joinDirectiveTokens(@NotNull List<String> tokens) {
 		// TODO: Detect Directive Marker and Check For Indented Lines in Future Tokens Before Return
+
+		for (String token : tokens) {
+			if (!Heading.isHeading(token) || LexerHelper.countLines(token) <= 3)
+				continue;
+
+			System.out.println("Heading: " + token + " | 3 Line: " + Heading.isThreeLineHeading(token));
+		}
 	}
 }
