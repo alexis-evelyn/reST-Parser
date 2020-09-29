@@ -2,11 +2,10 @@ package me.alexisevelyn.restparser;
 
 import me.alexisevelyn.restparser.document.tokens.Directive;
 import me.alexisevelyn.restparser.document.tokens.Heading;
+import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Attempt at Better Tokenization!!!
@@ -65,6 +64,7 @@ public class TokenizerHelper {
 			}
 
 //			printColor(TerminalColors.ANSI_TEXT_CYAN, "Fixed Headings: " + fixedHeadings.toString() + LexerHelper.getDefaultLineDelimiter());
+			// TODO: Make sure not to overwrite wrong tokens
 			modifiedTokens.remove(currentTokenPos);
 			modifiedTokens.addAll(currentTokenPos, fixedHeadings);
 		}
@@ -76,6 +76,7 @@ public class TokenizerHelper {
 	private static ArrayList<String> joinDirectiveTokens(@NotNull List<String> tokens) {
 		// TODO: Detect Directive Marker and Check For Indented Lines in Future Tokens Before Return
 		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
+		ArrayList<Map<int[], String>> preProcessedTokens = new ArrayList<>();
 
 		int currentTokenPos = 0;
 		for (String token : tokens) {
@@ -84,29 +85,61 @@ public class TokenizerHelper {
 			if (!Directive.isDirective(token))
 				continue;
 
-			printColor(TerminalColors.ANSI_TEXT_YELLOW, "Directive: " + LexerHelper.getDefaultLineDelimiter() + mergeDirectiveTokens(currentTokenPos, modifiedTokens));
-			System.out.println();
+//			printColor(TerminalColors.ANSI_TEXT_YELLOW, "Directive: " + LexerHelper.getDefaultLineDelimiter() + mergeDirectiveTokens(currentTokenPos, modifiedTokens));
+//			System.out.println();
+
+			// 6, 0, 6, 3, 22
+			preProcessedTokens.add(mergeDirectiveTokens(currentTokenPos, modifiedTokens));
 		}
 
+		// I should probably verify the Map to ensure type safety and null checks
+		for (Map<int[], String> preProcessedToken : preProcessedTokens) {
+			int[] positions = (int[]) preProcessedToken.keySet().toArray()[0];
+
+			int startPos = positions[0];
+			int endingPos = positions[1];
+			String directiveToken = (String) preProcessedToken.values().toArray()[0];
+
+//			System.out.println(TerminalColors.ANSI_TEXT_RED + "" + startPos + " | " + endingPos);
+//			printColor(TerminalColors.ANSI_TEXT_YELLOW, directiveToken);
+//
+//			printColor(TerminalColors.ANSI_TEXT_RED, modifiedTokens.get(startPos));
+//			printColor(TerminalColors.ANSI_TEXT_RED, modifiedTokens.get(endingPos));
+
+			modifiedTokens.set(startPos, directiveToken);
+
+			// TODO: Remove Tokens in Range After Starting Position
+		}
+
+		printColor(TerminalColors.ANSI_TEXT_RED, Arrays.toString(modifiedTokens.toArray()));
 		return modifiedTokens;
 	}
 
-	private static String mergeDirectiveTokens(int startingPos, ArrayList<String> tokens) {
+	private static Map<int[], String> mergeDirectiveTokens(int startingPos, ArrayList<String> tokens) {
 		String DIRECTIVE_ENDING_REGEX = "(^[\\S]+)[\\w\\d\\s]+";
 		String DIRECTIVE_ENDING_REGEX_ALT = "^[\\S]+";
 
 		StringBuilder currentDirective = new StringBuilder().append(tokens.get(startingPos-1)).append(LexerHelper.getDefaultLineDelimiter()).append(LexerHelper.getDefaultLineDelimiter());
+		int endingPos = tokens.size();
 		for (int currentTokenPos = startingPos; currentTokenPos < tokens.size(); currentTokenPos++) {
 //			printColor(TerminalColors.ANSI_TEXT_RED, tokens.get(currentTokenPos));
 
-			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX) || LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX_ALT))
+			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX) || LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX_ALT)) {
+				endingPos = currentTokenPos;
 				break;
+			}
 
 			currentDirective.append(tokens.get(currentTokenPos));
 			currentDirective.append(LexerHelper.getDefaultLineDelimiter()).append(LexerHelper.getDefaultLineDelimiter());
 		}
 
-		return currentDirective.toString().trim();
+		HashMap<int[], String> outputDirective = new HashMap<>();
+		int[] positions = new int[2];
+		positions[0] = startingPos - 1;
+		positions[1] = endingPos - 1;
+
+		outputDirective.put(positions, currentDirective.toString().trim());
+		return outputDirective;
 	}
 
 	private static void printColor(TerminalColors color, String token) {
