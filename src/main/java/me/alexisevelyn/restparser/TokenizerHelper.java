@@ -100,15 +100,18 @@ public class TokenizerHelper {
 			int endingPos = positions[1];
 			String directiveToken = (String) preProcessedToken.values().toArray()[0];
 
-//			System.out.println(TerminalColors.ANSI_TEXT_RED + "" + startPos + " | " + endingPos);
+//			System.out.println(TerminalColors.ANSI_TEXT_CYAN + "" + startPos + " | " + endingPos);
 //			printColor(TerminalColors.ANSI_TEXT_YELLOW, directiveToken);
 //
-//			printColor(TerminalColors.ANSI_TEXT_RED, modifiedTokens.get(startPos));
-//			printColor(TerminalColors.ANSI_TEXT_RED, modifiedTokens.get(endingPos));
+//			printColor(TerminalColors.ANSI_TEXT_CYAN, modifiedTokens.get(startPos));
+//			printColor(TerminalColors.ANSI_TEXT_WHITE, modifiedTokens.get(endingPos));
 
 			modifiedTokens.set(startPos, directiveToken);
 
-			// TODO: Remove Tokens in Range After Starting Position
+			// TODO: Remove these tokens and adjust currentPos based on previously removed tokens
+			for (int currentPos = startPos + 1; currentPos <= endingPos; currentPos++) {
+				printColor(TerminalColors.ANSI_TEXT_YELLOW, modifiedTokens.get(currentPos));
+			}
 		}
 
 		printColor(TerminalColors.ANSI_TEXT_YELLOW, "------------------------------------------------------------------------------------------");
@@ -119,15 +122,15 @@ public class TokenizerHelper {
 	}
 
 	private static Map<int[], String> mergeDirectiveTokens(int startingPos, ArrayList<String> tokens) {
-		String DIRECTIVE_ENDING_REGEX = "(^[\\S]+)[\\w\\d\\s]+";
-		String DIRECTIVE_ENDING_REGEX_ALT = "^[\\S]+";
+		String DIRECTIVE_ENDING_REGEX = "(^[\\S]+).*";
+//		String DIRECTIVE_ENDING_REGEX_ALT = "^[\\S]+";
 
 		StringBuilder currentDirective = new StringBuilder().append(tokens.get(startingPos-1)).append(LexerHelper.getDefaultLineDelimiter()).append(LexerHelper.getDefaultLineDelimiter());
 		int endingPos = tokens.size();
 		for (int currentTokenPos = startingPos; currentTokenPos < tokens.size(); currentTokenPos++) {
 //			printColor(TerminalColors.ANSI_TEXT_RED, tokens.get(currentTokenPos));
 
-			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX) || LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX_ALT)) {
+			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX)) {// || LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX_ALT)) {
 				endingPos = currentTokenPos;
 				break;
 			}
