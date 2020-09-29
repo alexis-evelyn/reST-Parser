@@ -84,25 +84,28 @@ public class TokenizerHelper {
 			if (!Directive.isDirective(token))
 				continue;
 
-			mergeDirectiveTokens(currentTokenPos, modifiedTokens);
+			printColor(TerminalColors.ANSI_TEXT_YELLOW, "Directive: " + LexerHelper.getDefaultLineDelimiter() + mergeDirectiveTokens(currentTokenPos, modifiedTokens));
+			System.out.println();
 		}
 
 		return modifiedTokens;
 	}
 
-	private static void mergeDirectiveTokens(int startingPos, ArrayList<String> tokens) {
+	private static String mergeDirectiveTokens(int startingPos, ArrayList<String> tokens) {
 		String DIRECTIVE_ENDING_REGEX = "(^[\\S]+)[\\w\\d\\s]+";
 
-		String currentDirective = "";
+		StringBuilder currentDirective = new StringBuilder().append(tokens.get(startingPos-1)).append(LexerHelper.getDefaultLineDelimiter()).append(LexerHelper.getDefaultLineDelimiter());
 		for (int currentTokenPos = startingPos; currentTokenPos < tokens.size(); currentTokenPos++) {
-			if (tokens.get(currentTokenPos).matches(DIRECTIVE_ENDING_REGEX))
+//			printColor(TerminalColors.ANSI_TEXT_RED, tokens.get(currentTokenPos));
+
+			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX))
 				break;
 
-			currentDirective = tokens.get(currentTokenPos);
+			currentDirective.append(tokens.get(currentTokenPos));
+			currentDirective.append(LexerHelper.getDefaultLineDelimiter()).append(LexerHelper.getDefaultLineDelimiter());
 		}
 
-		printColor(TerminalColors.ANSI_TEXT_BLUE, "Directive: " + LexerHelper.getDefaultLineDelimiter() + currentDirective);
-		System.out.println();
+		return currentDirective.toString();
 	}
 
 	private static void printColor(TerminalColors color, String token) {

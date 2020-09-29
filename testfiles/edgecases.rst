@@ -62,7 +62,6 @@ Am 3
 -------------------
 
 .. IMPORTANT::
-
     https://docutils.sourceforge.io/docs/ref/rst/directives.html
 
     Cool!!!
