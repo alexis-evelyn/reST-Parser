@@ -40,6 +40,8 @@ public class Heading implements Token {
 		if (count < 2)
 			return false;
 
+//		System.out.println("Two+ Liner!!!");
+
 		try {
 			String headingLine = LexerHelper.getLine(token, 0);
 			String delimiterLine = LexerHelper.getLine(token, 1);
@@ -47,7 +49,9 @@ public class Heading implements Token {
 			if (delimiterLine.length() < headingLine.length())
 				return false;
 
-//			System.err.println("2 Token: " + token);
+//			System.out.println("Succeeded Delimiter Line Length Check For 2+ Liner!!!");
+
+//			System.err.println("2 Token: \"" + token + "\" | Passes Final Check: " + delimiterLine.matches(markerRegex));
 			return delimiterLine.matches(markerRegex);
 		} catch (Exception e) {
 			System.err.println("Warning - Token \"" + token + "\" breaks the two liner heading check!!!");

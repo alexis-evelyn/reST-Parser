@@ -28,41 +28,43 @@ public class TokenizerHelper {
 		// TODO: Check For Mashed Headers Specifically Here Too Before Return
 
 		for (String token : tokens) {
-			if (!Heading.isHeading(token) || LexerHelper.countLines(token) <= 6) // 3 Default - 6 For Debugging
+			if (!Heading.isHeading(token) || LexerHelper.countLines(token) <= 3) // 3 Default - 6 For Debugging
 				continue;
 
 //			System.out.println("Heading: " + token + " | 3 Line: " + Heading.isThreeLineHeading(token));
 
 			boolean completedTokenSplit = false;
+			int splitPos;
+			String temporaryToken = token;
 			while (!completedTokenSplit) {
-//				System.out.println("Token: " + token);
+//				System.out.println("Token: " + temporaryToken);
 
-				int splitPos = 0;
-				if (Heading.isTwoLineHeading(token)) {
-					splitPos = LexerHelper.ordinalIndexOf(token, LexerHelper.getDefaultLineDelimiter(), 2);
+				splitPos = 0; // TODO: Set to Zero
+				if (Heading.isTwoLineHeading(temporaryToken)) {
+					splitPos = LexerHelper.ordinalIndexOf(temporaryToken, LexerHelper.getDefaultLineDelimiter(), 2);
 //					System.out.println("Two Liner Split!!! Pos: " + splitPos);
 				}
 
-				if (Heading.isThreeLineHeading(token)) {
-					splitPos = LexerHelper.ordinalIndexOf(token, LexerHelper.getDefaultLineDelimiter(), 3);
+				if (Heading.isThreeLineHeading(temporaryToken)) {
+					splitPos = LexerHelper.ordinalIndexOf(temporaryToken, LexerHelper.getDefaultLineDelimiter(), 3);
 //					System.out.println("Three Liner Split!!! Pos: " + splitPos);
 				}
 
-				String temporaryHeading = token.substring(0, splitPos);
-				String tempHeadingTwo = token.substring(splitPos);
+				String temporaryHeading = temporaryToken.substring(0, splitPos).strip();
+				String tempHeadingTwo = temporaryToken.substring(splitPos).strip();
 
 				System.out.println(TerminalColors.ANSI_TEXT_PURPLE + "Token 1: " + temporaryHeading.replace("\n", ""));
-				System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Token 2: " + tempHeadingTwo.replace("\n", ""));
+//				System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Token 2: " + tempHeadingTwo.replace("\n", ""));
 
 				if (LexerHelper.countLines(tempHeadingTwo) <= 3) {
-//					System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Token 2: " + tempHeadingTwo.replace("\n", ""));
+					System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Token 2: " + tempHeadingTwo.replace("\n", ""));
 
 					completedTokenSplit = true;
 				} else {
-					token = tempHeadingTwo;
+					temporaryToken = tempHeadingTwo;
 				}
 
-				completedTokenSplit = true; // Temporary Stop to Prevent Infinite Loop
+//				completedTokenSplit = true; // Temporary Stop to Prevent Infinite Loop
 			}
 		}
 	}
