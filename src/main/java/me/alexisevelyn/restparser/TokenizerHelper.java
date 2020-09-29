@@ -30,6 +30,7 @@ public class TokenizerHelper {
 		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
 
 		int currentTokenPos = 0;
+		int fixedTokenSkip = 0;
 		for (String token : tokens) {
 			currentTokenPos++;
 
@@ -64,9 +65,9 @@ public class TokenizerHelper {
 			}
 
 //			printColor(TerminalColors.ANSI_TEXT_CYAN, "Fixed Headings: " + fixedHeadings.toString() + LexerHelper.getDefaultLineDelimiter());
-			// TODO: Make sure not to overwrite wrong tokens
-			modifiedTokens.remove(currentTokenPos);
-			modifiedTokens.addAll(currentTokenPos, fixedHeadings);
+			modifiedTokens.remove(currentTokenPos + fixedTokenSkip - 1);
+			modifiedTokens.addAll((currentTokenPos - 1) + fixedTokenSkip, fixedHeadings);
+			fixedTokenSkip += fixedHeadings.size() - 1;
 		}
 
 		return modifiedTokens;
