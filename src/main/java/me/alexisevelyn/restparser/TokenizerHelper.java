@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Attempt at Better Tokenization!!!
+ */
 public class TokenizerHelper {
-	// TODO: Create better tokenizer to handle edge cases
 	public static List<String> tokenizeContents(@NotNull String fileContents) {
 		List<String> tokens = splitOnNewLines(fileContents);
 
@@ -16,15 +18,14 @@ public class TokenizerHelper {
 		tokens = splitEdgeCaseHeadings(tokens);
 
 		// Fixes Directives by combining the tokens
-		joinDirectiveTokens(tokens);
-
-		return tokens;
+		return joinDirectiveTokens(tokens);
 	}
 
 	private static List<String> splitOnNewLines(@NotNull String fileContents) {
 		return Arrays.asList(fileContents.split("\n\n"));
 	}
 
+	@NotNull
 	private static ArrayList<String> splitEdgeCaseHeadings(@NotNull List<String> tokens) {
 		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
 
@@ -70,7 +71,11 @@ public class TokenizerHelper {
 		return modifiedTokens;
 	}
 
-	private static void joinDirectiveTokens(@NotNull List<String> tokens) {
+	@NotNull
+	private static ArrayList<String> joinDirectiveTokens(@NotNull List<String> tokens) {
 		// TODO: Detect Directive Marker and Check For Indented Lines in Future Tokens Before Return
+
+
+		return new ArrayList<>(tokens);
 	}
 }
