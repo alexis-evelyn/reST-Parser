@@ -12,17 +12,11 @@ How am I supposed to deal with the mashed headers? Is it even valid?
 
 .. code-block:: Rest
 
-    ###########
-    Test Mashed
-    ###########
-    #######
-    Test 2
-    #######
+    ++++
+    Test
+    ++++
 
-    Test Mashed 2
-    ~~~~~~~~~~~~~
-    Test Mashed 3
-    ~~~~~~~~~~~~~
+    I am a paragraph!!!
 
 * Bulleted One Star
 * Bulleted Two Star

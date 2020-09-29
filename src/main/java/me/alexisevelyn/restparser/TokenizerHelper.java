@@ -64,7 +64,7 @@ public class TokenizerHelper {
 				}
 			}
 
-//			System.out.println(TerminalColors.ANSI_TEXT_CYAN + "Fixed Headings: " + fixedHeadings.toString().replace(LexerHelper.getDefaultLineDelimiter(), ""));
+//			printColor(TerminalColors.ANSI_TEXT_CYAN, "Fixed Headings: " + fixedHeadings.toString() + LexerHelper.getDefaultLineDelimiter());
 			modifiedTokens.remove(currentTokenPos);
 			modifiedTokens.addAll(currentTokenPos, fixedHeadings);
 		}
@@ -77,13 +77,37 @@ public class TokenizerHelper {
 		// TODO: Detect Directive Marker and Check For Indented Lines in Future Tokens Before Return
 		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
 
+		int currentTokenPos = 0;
 		for (String token : tokens) {
+			currentTokenPos++;
+
 			if (!Directive.isDirective(token))
 				continue;
 
-			System.out.println("Found Directive!!! " + token);
+			mergeDirectiveTokens(currentTokenPos, modifiedTokens);
 		}
 
 		return modifiedTokens;
+	}
+
+	private static void mergeDirectiveTokens(int startingPos, ArrayList<String> tokens) {
+		String DIRECTIVE_ENDING_REGEX = "(^[\\S]+)[\\w\\d\\s]+";
+
+		String currentDirective = "";
+		for (int currentTokenPos = startingPos; currentTokenPos < tokens.size(); currentTokenPos++) {
+			if (tokens.get(currentTokenPos).matches(DIRECTIVE_ENDING_REGEX))
+				break;
+
+			currentDirective = tokens.get(currentTokenPos);
+		}
+
+		printColor(TerminalColors.ANSI_TEXT_BLUE, "Directive: " + LexerHelper.getDefaultLineDelimiter() + currentDirective);
+		System.out.println();
+	}
+
+	private static void printColor(TerminalColors color, String token) {
+		for (int lineNumber = 0; lineNumber < LexerHelper.countLines(token); lineNumber++) {
+			System.out.println(color + LexerHelper.getLine(token, lineNumber));
+		}
 	}
 }
