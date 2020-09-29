@@ -27,17 +27,47 @@ public class TokenizerHelper {
 	private static void splitEdgeCaseHeadings(@NotNull List<String> tokens) {
 		// TODO: Check For Mashed Headers Specifically Here Too Before Return
 
+		for (String token : tokens) {
+			if (!Heading.isHeading(token) || LexerHelper.countLines(token) <= 6) // 3 Default - 6 For Debugging
+				continue;
 
+//			System.out.println("Heading: " + token + " | 3 Line: " + Heading.isThreeLineHeading(token));
+
+			boolean completedTokenSplit = false;
+			while (!completedTokenSplit) {
+//				System.out.println("Token: " + token);
+
+				int splitPos = 0;
+				if (Heading.isTwoLineHeading(token)) {
+					splitPos = LexerHelper.ordinalIndexOf(token, LexerHelper.getDefaultLineDelimiter(), 2);
+//					System.out.println("Two Liner Split!!! Pos: " + splitPos);
+				}
+
+				if (Heading.isThreeLineHeading(token)) {
+					splitPos = LexerHelper.ordinalIndexOf(token, LexerHelper.getDefaultLineDelimiter(), 3);
+//					System.out.println("Three Liner Split!!! Pos: " + splitPos);
+				}
+
+				String temporaryHeading = token.substring(0, splitPos);
+				String tempHeadingTwo = token.substring(splitPos);
+
+				System.out.println(TerminalColors.ANSI_TEXT_PURPLE + "Token 1: " + temporaryHeading.replace("\n", ""));
+				System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Token 2: " + tempHeadingTwo.replace("\n", ""));
+
+				if (LexerHelper.countLines(tempHeadingTwo) <= 3) {
+//					System.out.println(TerminalColors.ANSI_TEXT_GREEN + "Token 2: " + tempHeadingTwo.replace("\n", ""));
+
+					completedTokenSplit = true;
+				} else {
+					token = tempHeadingTwo;
+				}
+
+				completedTokenSplit = true; // Temporary Stop to Prevent Infinite Loop
+			}
+		}
 	}
 
 	private static void joinDirectiveTokens(@NotNull List<String> tokens) {
 		// TODO: Detect Directive Marker and Check For Indented Lines in Future Tokens Before Return
-
-		for (String token : tokens) {
-			if (!Heading.isHeading(token) || LexerHelper.countLines(token) <= 3)
-				continue;
-
-			System.out.println("Heading: " + token + " | 3 Line: " + Heading.isThreeLineHeading(token));
-		}
 	}
 }

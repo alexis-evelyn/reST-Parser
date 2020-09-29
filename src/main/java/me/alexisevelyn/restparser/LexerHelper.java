@@ -55,4 +55,23 @@ public class LexerHelper {
 				.forEach((key, value)
 						-> System.out.println(String.valueOf(TerminalColors.ANSI_TEXT_GREEN) + key + ": " + value));
 	}
+
+	/**
+	 * Pulled From: https://stackoverflow.com/a/3976656/6828099
+	 *
+	 * @param str
+	 * @param substr
+	 * @param n
+	 * @return
+	 */
+	public static int ordinalIndexOf(String str, String substr, int n) {
+		int pos = str.indexOf(substr);
+		while (--n > 0 && pos != -1)
+			pos = str.indexOf(substr, pos + 1);
+		return pos;
+	}
+
+	public static String getDefaultLineDelimiter() {
+		return DEFAULT_LINE_DELIMITER;
+	}
 }
