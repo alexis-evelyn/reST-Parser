@@ -93,12 +93,13 @@ public class TokenizerHelper {
 
 	private static String mergeDirectiveTokens(int startingPos, ArrayList<String> tokens) {
 		String DIRECTIVE_ENDING_REGEX = "(^[\\S]+)[\\w\\d\\s]+";
+		String DIRECTIVE_ENDING_REGEX_ALT = "^[\\S]+";
 
 		StringBuilder currentDirective = new StringBuilder().append(tokens.get(startingPos-1)).append(LexerHelper.getDefaultLineDelimiter()).append(LexerHelper.getDefaultLineDelimiter());
 		for (int currentTokenPos = startingPos; currentTokenPos < tokens.size(); currentTokenPos++) {
 //			printColor(TerminalColors.ANSI_TEXT_RED, tokens.get(currentTokenPos));
 
-			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX))
+			if (LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX) || LexerHelper.getLine(tokens.get(currentTokenPos), 0).matches(DIRECTIVE_ENDING_REGEX_ALT))
 				break;
 
 			currentDirective.append(tokens.get(currentTokenPos));

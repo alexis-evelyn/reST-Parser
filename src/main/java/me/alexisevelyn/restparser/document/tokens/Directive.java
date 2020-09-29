@@ -7,7 +7,7 @@ import me.alexisevelyn.restparser.LexerHelper;
 // TODO: Figure out how to pull tokens out of this.
 public class Directive implements Token {
 	private static final String DEFAULT_DIRECTIVE_REGEX = "\\.\\. [A-Za-z0-9\\-]+::";
-	private static final String DEFAULT_DIRECTIVE_REGEX_ENDING_TEXT = "\\.\\. [A-Za-z0-9\\-]+::[ \\w.]+";
+	private static final String DEFAULT_DIRECTIVE_REGEX_ENDING_TEXT = "\\.\\. [A-Za-z0-9\\-]+::.*";
 
 	private String token;
 
