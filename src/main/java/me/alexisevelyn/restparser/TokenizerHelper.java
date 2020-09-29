@@ -13,7 +13,7 @@ public class TokenizerHelper {
 		List<String> tokens = splitOnNewLines(fileContents);
 
 		// Fixes Edge Case Mashed Headings By Splitting Them Into Separate Tokens
-		splitEdgeCaseHeadings(tokens);
+		tokens = splitEdgeCaseHeadings(tokens);
 
 		// Fixes Directives by combining the tokens
 		joinDirectiveTokens(tokens);
@@ -25,8 +25,13 @@ public class TokenizerHelper {
 		return Arrays.asList(fileContents.split("\n\n"));
 	}
 
-	private static void splitEdgeCaseHeadings(@NotNull List<String> tokens) {
+	private static ArrayList<String> splitEdgeCaseHeadings(@NotNull List<String> tokens) {
+		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
+
+		int currentTokenPos = 0;
 		for (String token : tokens) {
+			currentTokenPos++;
+
 			if (!Heading.isHeading(token) || LexerHelper.countLines(token) <= 3)
 				continue;
 
@@ -58,9 +63,11 @@ public class TokenizerHelper {
 			}
 
 //			System.out.println(TerminalColors.ANSI_TEXT_CYAN + "Fixed Headings: " + fixedHeadings.toString().replace(LexerHelper.getDefaultLineDelimiter(), ""));
-
-			// TODO: Remove Current Token and Inject `fixedHeadings` in place of existing token!!!
+			modifiedTokens.remove(currentTokenPos);
+			modifiedTokens.addAll(currentTokenPos, fixedHeadings);
 		}
+
+		return modifiedTokens;
 	}
 
 	private static void joinDirectiveTokens(@NotNull List<String> tokens) {
