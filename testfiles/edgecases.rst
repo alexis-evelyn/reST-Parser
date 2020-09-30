@@ -69,7 +69,7 @@ Am 3
 Hello There!!!
 
 
-    Bye
+    Why is this missing? Apparently the terminal is a dick as this isn't missing when I surround every token with quotes. The non-quoted also "skips" alternating a color like it should if there was a token there (which there is as you are reading it right now).
 
 ..
 

@@ -1,5 +1,6 @@
 package me.alexisevelyn.restparser.utility;
 
+import me.alexisevelyn.restparser.document.tokens.BlockQuote;
 import me.alexisevelyn.restparser.document.tokens.Directive;
 import me.alexisevelyn.restparser.document.tokens.Heading;
 import org.jetbrains.annotations.NotNull;
@@ -157,6 +158,13 @@ public class TokenizerHelper {
 
 	@NotNull
 	private static List<String> joinBlockQuotes(@NotNull List<String> tokens) {
+		printColor(TerminalColors.ANSI_TEXT_RED, TerminalColors.ANSI_TEXT_GREEN, tokens, true);
+
+		for (String token : tokens) {
+			if (BlockQuote.isBlockQuote(token))
+				printColor(TerminalColors.ANSI_TEXT_YELLOW, token);
+		}
+
 		return tokens;
 	}
 
@@ -171,12 +179,23 @@ public class TokenizerHelper {
 	}
 
 	private static void printColor(TerminalColors color, TerminalColors color2, List<String> tokens) {
+		printColor(color, color2, tokens, false);
+	}
+
+	private static void printColor(TerminalColors color, TerminalColors color2, List<String> tokens, boolean debug) {
 		boolean firstColor = true;
 		for (String token : tokens) {
-			if (firstColor)
-				printColor(color, token);
-			else
-				printColor(color2, token);
+			if (!debug) {
+				if (firstColor)
+					printColor(color, token);
+				else
+					printColor(color2, token);
+			} else {
+				if (firstColor)
+					printColor(color, '"' + token + '"');
+				else
+					printColor(color2, '"' + token + '"');
+			}
 
 			firstColor = !firstColor;
 		}
