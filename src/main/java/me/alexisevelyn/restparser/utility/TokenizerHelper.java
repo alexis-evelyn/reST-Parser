@@ -1,4 +1,4 @@
-package me.alexisevelyn.restparser;
+package me.alexisevelyn.restparser.utility;
 
 import me.alexisevelyn.restparser.document.tokens.Directive;
 import me.alexisevelyn.restparser.document.tokens.Heading;

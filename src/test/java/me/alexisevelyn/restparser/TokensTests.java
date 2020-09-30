@@ -2,7 +2,8 @@ package me.alexisevelyn.restparser;
 
 import me.alexisevelyn.restparser.exceptions.FileReadException;
 import me.alexisevelyn.restparser.exceptions.InvalidFileException;
-import org.junit.jupiter.api.Assertions;
+import me.alexisevelyn.restparser.utility.LexerHelper;
+import me.alexisevelyn.restparser.utility.TerminalColors;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

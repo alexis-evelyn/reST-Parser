@@ -2,7 +2,7 @@ package me.alexisevelyn.restparser.document.tokens;
 
 // https://docutils.sourceforge.io/docs/ref/rst/directives.html
 
-import me.alexisevelyn.restparser.LexerHelper;
+import me.alexisevelyn.restparser.utility.LexerHelper;
 
 // TODO: Figure out how to pull tokens out of this.
 public class Directive implements Token {

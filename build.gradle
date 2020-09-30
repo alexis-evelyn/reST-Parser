@@ -20,7 +20,7 @@ dependencies {
     compile group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations_version}"
 
     // For Reading Utilities
-    implementation group: 'org.apache.commons', name: 'commons-text', version: "${project.apache_commons_text_version}"
+//    implementation group: 'org.apache.commons', name: 'commons-text', version: "${project.apache_commons_text_version}"
 
     // For Extended Mime-Type Detection
 //    implementation group: 'eu.medsea.mimeutil', name: 'mime-util', version: "${project.mime_utils_version}"

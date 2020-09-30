@@ -1,6 +1,6 @@
 package me.alexisevelyn.restparser.document.tokens;
 
-import me.alexisevelyn.restparser.LexerHelper;
+import me.alexisevelyn.restparser.utility.LexerHelper;
 
 public class BulletedList implements Token {
 	private static final String DEFAULT_BULLET_REGEX = "^[*\\-+] .+";

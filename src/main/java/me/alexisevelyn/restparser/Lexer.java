@@ -3,6 +3,7 @@ package me.alexisevelyn.restparser;
 import me.alexisevelyn.restparser.document.Document;
 import me.alexisevelyn.restparser.document.tokens.*;
 import me.alexisevelyn.restparser.document.tokens.Unidentified;
+import me.alexisevelyn.restparser.utility.TokenizerHelper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

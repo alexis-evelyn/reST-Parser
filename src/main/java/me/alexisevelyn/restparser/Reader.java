@@ -3,7 +3,7 @@ package me.alexisevelyn.restparser;
 import me.alexisevelyn.restparser.document.Document;
 import me.alexisevelyn.restparser.exceptions.FileReadException;
 import me.alexisevelyn.restparser.exceptions.InvalidFileException;
-import org.apache.commons.text.TextStringBuilder;
+import me.alexisevelyn.restparser.utility.LexerHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -37,7 +37,7 @@ public class Reader {
 		return this.document;
 	}
 
-	private static TextStringBuilder readFile(@NotNull File file) throws IOException, InvalidFileException, FileReadException {
+	private static StringBuilder readFile(@NotNull File file) throws IOException, InvalidFileException, FileReadException {
 		if (!file.exists())
 			throw new FileNotFoundException("File: '" + file.getAbsolutePath() + "' cannot be found!");
 
@@ -48,9 +48,9 @@ public class Reader {
 		if (mimeType == null || !mimeType.equals("text/x-rst"))
 			throw new InvalidFileException("File: '" + file.getAbsolutePath() + "' does not match Mime Type of 'text/x-rst'!");
 
-		TextStringBuilder stringBuilder = new TextStringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-		bufferedReader.lines().forEach(stringBuilder::appendln);
+		bufferedReader.lines().forEach(line -> stringBuilder.append(line).append(LexerHelper.getDefaultLineDelimiter()));
 
 		return stringBuilder;
 	}

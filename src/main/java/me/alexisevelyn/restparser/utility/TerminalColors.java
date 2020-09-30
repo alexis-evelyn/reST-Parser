@@ -1,4 +1,4 @@
-package me.alexisevelyn.restparser;
+package me.alexisevelyn.restparser.utility;
 
 // https://en.wikipedia.org/wiki/ANSI_escape_code
 public enum TerminalColors {

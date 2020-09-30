@@ -1,6 +1,6 @@
 package me.alexisevelyn.restparser.document.tokens;
 
-import me.alexisevelyn.restparser.LexerHelper;
+import me.alexisevelyn.restparser.utility.LexerHelper;
 
 public class Heading implements Token {
 	// This Regex Was Harder to Figure Out Than I Would've Thought. I'm making it available for public domain explicitly to save others the trouble.
