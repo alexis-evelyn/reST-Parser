@@ -14,6 +14,9 @@ public class TokenizerHelper {
 	public static List<String> tokenizeContents(@NotNull String fileContents) {
 		List<String> tokens = splitOnNewLines(fileContents);
 
+		// Removes Unnecessary Newlines From Tokens (Fixes Regex Searching Issues With Extra Newlines)
+		tokens = removeExtraneousNewlines(tokens);
+
 		// Fixes Edge Case Mashed Headings By Splitting Them Into Separate Tokens
 		tokens = splitEdgeCaseHeadings(tokens);
 
@@ -25,6 +28,17 @@ public class TokenizerHelper {
 
 	private static List<String> splitOnNewLines(@NotNull String fileContents) {
 		return Arrays.asList(fileContents.split("\n\n"));
+	}
+
+	private static List<String> removeExtraneousNewlines(@NotNull List<String> tokens) {
+		// Pulled From: https://stackoverflow.com/a/60379251/6828099
+
+		ArrayList<String> modifiedTokens = new ArrayList<>();
+		for (String token : tokens) {
+			modifiedTokens.add(token.replaceAll("^[\n\r]", "").replaceAll("[\n\r]$", ""));
+		}
+
+		return modifiedTokens;
 	}
 
 	@NotNull
@@ -158,18 +172,33 @@ public class TokenizerHelper {
 
 	@NotNull
 	private static List<String> joinBlockQuotes(@NotNull List<String> tokens) {
-		printColor(TerminalColors.ANSI_TEXT_RED, TerminalColors.ANSI_TEXT_GREEN, tokens, true);
+//		printColor(TerminalColors.ANSI_TEXT_RED, TerminalColors.ANSI_TEXT_GREEN, tokens, false);
 
 		for (String token : tokens) {
 			if (BlockQuote.isBlockQuote(token))
-				printColor(TerminalColors.ANSI_TEXT_YELLOW, token);
+				printColor(TerminalColors.ANSI_TEXT_YELLOW, token, true);
 		}
 
 		return tokens;
 	}
 
 	private static void printColor(TerminalColors color, String token) {
-		for (int lineNumber = 0; lineNumber < LexerHelper.countLines(token); lineNumber++) {
+		printColor(color, token, false);
+	}
+
+	private static void printColor(TerminalColors color, String token, boolean debug) {
+		if (debug)
+			System.out.print(color + "\"");
+
+		int totalLines = LexerHelper.countLines(token);
+		for (int lineNumber = 0; lineNumber < totalLines; lineNumber++) {
+			if (debug && lineNumber == totalLines - 1) {
+				// This allows the end quote to exist on the same line as the last line of the token.
+				// The reason for this is to show a more true form of what the raw token looks like.
+				System.out.println(color + LexerHelper.getLine(token, lineNumber) + "\"");
+				break;
+			}
+
 			System.out.println(color + LexerHelper.getLine(token, lineNumber));
 		}
 	}
