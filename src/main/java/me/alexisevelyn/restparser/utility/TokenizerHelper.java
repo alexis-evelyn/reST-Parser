@@ -17,7 +17,9 @@ public class TokenizerHelper {
 		tokens = splitEdgeCaseHeadings(tokens);
 
 		// Fixes Directives by combining the tokens
-		return joinDirectiveTokens(tokens);
+		tokens = joinDirectives(tokens);
+
+		return joinBlockQuotes(tokens);
 	}
 
 	private static List<String> splitOnNewLines(@NotNull String fileContents) {
@@ -25,7 +27,7 @@ public class TokenizerHelper {
 	}
 
 	@NotNull
-	private static ArrayList<String> splitEdgeCaseHeadings(@NotNull List<String> tokens) {
+	private static List<String> splitEdgeCaseHeadings(@NotNull List<String> tokens) {
 		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
 
 		int currentTokenPos = 0;
@@ -73,7 +75,7 @@ public class TokenizerHelper {
 	}
 
 	@NotNull
-	private static ArrayList<String> joinDirectiveTokens(@NotNull List<String> tokens) {
+	private static List<String> joinDirectives(@NotNull List<String> tokens) {
 		ArrayList<String> modifiedTokens = new ArrayList<>(tokens);
 		ArrayList<Map<int[], String>> preProcessedTokens = new ArrayList<>();
 
@@ -151,6 +153,11 @@ public class TokenizerHelper {
 
 		outputDirective.put(positions, currentDirective.toString().trim());
 		return outputDirective;
+	}
+
+	@NotNull
+	private static List<String> joinBlockQuotes(@NotNull List<String> tokens) {
+		return tokens;
 	}
 
 	private static void printColor(TerminalColors color, String token) {
