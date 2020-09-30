@@ -17,6 +17,8 @@ public class Lexer {
 		this.addHandler(BulletedList.class);
 		this.addHandler(Directive.class);
 		this.addHandler(EnumeratedList.class);
+		this.addHandler(BlockQuote.class);
+		this.addHandler(DoctestBlock.class);
 	}
 
 	public void addHandler(Class<? extends Token> handler) {

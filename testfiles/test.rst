@@ -53,3 +53,22 @@ B. Period B
 
 (A) Double A
 (B) Double B
+
+>>> Doctest Block
+There
+  Test Quote
+    Testing
+ Test
+Test
+Testing 2
+
+Testing 3 Paragraph
+
+Test
+
+>>> Hello
+
+>>>
+Hello
+
+>>>No Space
